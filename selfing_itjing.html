@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Tjing - "Selfing" door de 6D Faseruimte</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            padding-top: 20px;
+            overflow: hidden;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            z-index: 10;
+        }
+        h1 {
+            font-size: 1.8em;
+            margin: 0 0 5px 0;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+        p {
+            font-size: 0.9em;
+            color: #888;
+            margin: 0 0 10px 0;
+            font-style: italic;
+            max-width: 700px;
+        }
+        #status-bar {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            color: #f39c12;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        #canvas-container {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            cursor: grab;
+        }
+        #canvas-container:active {
+            cursor: grabbing;
+        }
+        .node text {
+            font-size: 10px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            pointer-events: none;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Dynamisch "Selfing" Proces</h1>
+        <p>Een autonoom bewustzijn navigeert door de 64 I Tjing staten. Elke stap vertegenwoordigt een XOR binaire mutatie (één veranderende Yin/Yang lijn) binnen de 6D-hyperkubus.</p>
+    </div>
+
+    <div id="status-bar">Huidige staat: Initialiseren...</div>
+
+    <div id="canvas-container"></div>
+
+    <script>
+        const width = 900;
+        const height = 650;
+
+        // 1. Data generatie
+        const nodes = Array.from({ length: 64 }, (_, i) => ({
+            id: i + 1,
+            label: (i + 1).toString(),
+            isVisited: false
+        }));
+
+        const links = [];
+        const adjList = {}; // Handig om buren snel op te zoeken voor het lopen
+        
+        for (let i = 0; i < 64; i++) {
+            adjList[i + 1] = [];
+            for (let bit = 0; bit < 6; bit++) {
+                let mask = 1 << bit;
+                let neighbor = i ^ mask;
+                
+                adjList[i + 1].push(neighbor + 1);
+
+                if (i < neighbor) {
+                    links.push({
+                        source: i + 1,
+                        target: neighbor + 1,
+                        isTraversed: false
+                    });
+                }
+            }
+        }
+
+        // 2. D3.js Setup
+        const svg = d3.select("#canvas-container")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .call(d3.zoom().on("zoom", (event) => g.attr("transform", event.transform)))
+            .append("g");
+
+        const g = svg.append("g");
+
+        // Force simulatie
+        const simulation = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink(links).id(d => d.id).distance(50).strength(0.6))
+            .force("charge", d3.forceManyBody().strength(-120))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collide", d3.forceCollide().radius(12).iterations(2));
+
+        // Lijnen (Edges)
+        const link = g.append("g")
+            .selectAll("line")
+            .data(links)
+            .enter().append("line")
+            .attr("stroke", "#333")
+            .attr("stroke-opacity", 0.8)
+            .attr("stroke-width", 1);
+
+        // Knooppunten (Nodes)
+        const node = g.append("g")
+            .selectAll("g")
+            .data(nodes)
+            .enter().append("g")
+            .attr("class", "node")
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+
+        const circles = node.append("circle")
+            .attr("r", 8)
+            .attr("fill", "#2c3e50")
+            .attr("stroke", "#1a252f")
+            .attr("stroke-width", 1);
+
+        const texts = node.append("text")
+            .text(d => d.label)
+            .attr("fill", "#7f8c8d");
+
+        // Positie updates
+        simulation.on("tick", () => {
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+            node.attr("transform", d => `translate(${d.x},${d.y})`);
+        });
+
+        // Sleep interacties
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        // ==========================================
+        // 3. HET "SELFING" NAVIGATIE ALGORITME
+        // ==========================================
+        
+        let currentNode = 22; // We starten bewust bij Hexagram 22 (Bi)
+        let pathHistory = [currentNode];
+        const statusBar = document.getElementById("status-bar");
+
+        function updateVisuals() {
+            // Update lokaal de UI van de nodes
+            circles.transition().duration(400)
+                .attr("r", d => d.id === currentNode ? 16 : (pathHistory.includes(d.id) ? 10 : 8))
+                .attr("fill", d => d.id === currentNode ? "#f1c40f" : (pathHistory.includes(d.id) ? "#d35400" : "#2c3e50"))
+                .attr("stroke", d => d.id === currentNode ? "#ffffff" : "#1a252f")
+                .attr("stroke-width", d => d.id === currentNode ? 3 : 1);
+
+            texts.transition().duration(400)
+                .attr("fill", d => d.id === currentNode ? "#000000" : (pathHistory.includes(d.id) ? "#ffffff" : "#7f8c8d"));
+
+            // Update de lijnen: laat het pad oplichten
+            link.transition().duration(400)
+                .attr("stroke", d => {
+                    // Check of deze link zojuist bewandeld is
+                    if (pathHistory.length > 1) {
+                        let prev = pathHistory[pathHistory.length - 2];
+                        if ((d.source.id === currentNode && d.target.id === prev) || 
+                            (d.target.id === currentNode && d.source.id === prev)) {
+                            return "#f39c12"; // Licht op
+                        }
+                    }
+                    return "#333";
+                })
+                .attr("stroke-width", d => {
+                    if (pathHistory.length > 1) {
+                        let prev = pathHistory[pathHistory.length - 2];
+                        if ((d.source.id === currentNode && d.target.id === prev) || 
+                            (d.target.id === currentNode && d.source.id === prev)) {
+                            return 3;
+                        }
+                    }
+                    return 1;
+                });
+
+            // Beperk geschiedenis weergave in de balk om het leesbaar te houden
+            let displayPath = pathHistory.slice(-6).join(" ➔ ");
+            statusBar.innerHTML = `Pad van Bewustzijn: ${displayPath}`;
+        }
+
+        function takeStep() {
+            // Haal de buren op van de huidige node (altijd precies 6 in een hexeract)
+            let neighbors = adjList[currentNode];
+            
+            // Kies een willekeurige binaire verandering (XOR stap)
+            let nextNode = neighbors[Math.floor(Math.random() * neighbors.length)];
+            
+            currentNode = nextNode;
+            pathHistory.push(currentNode);
+            
+            // Houd de array compact (bijv. max 50 stappen onthouden in het geheugen)
+            if (pathHistory.length > 50) {
+                pathHistory.shift();
+            }
+
+            updateVisuals();
+        }
+
+        // Start het proces
+        setTimeout(() => {
+            updateVisuals();
+            // Zet een interval om de "Walker" elke 1.5 seconde een stap te laten zetten
+            setInterval(takeStep, 1500);
+        }, 1000);
+
+    </script>
+</body>
+</html>
