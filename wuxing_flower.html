@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Tjing - Acht Paleizen (Palaces P)</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b0f19; /* Donkerblauwe/zwarte achtergrond uit je afbeelding */
+            color: #ffffff;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            color: #e2e8f0;
+            margin: 0 0 10px 0;
+        }
+        .header p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin: 0;
+        }
+        #palaces-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+        }
+        .palace-container {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 4px;
+            padding: 20px;
+            position: relative;
+        }
+        .palace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        .palace-title {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+        .hex-count {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        .node text {
+            font-size: 10px;
+            font-family: monospace;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none;
+        }
+        /* Wu Xing Kleuren */
+        .color-dui { background-color: #3b82f6; }
+        .color-gen { background-color: #06b6d4; }
+        .color-kan { background-color: #10b981; }
+        .color-kun { background-color: #eab308; }
+        .color-zhen { background-color: #ec4899; }
+        .color-xun { background-color: #8b5cf6; }
+        .color-qian { background-color: #ef4444; }
+        .color-li { background-color: #f97316; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Palaces P — Exact Data Arrangement</h1>
+        <p>P Sets — Lexicographic / Complement-Symmetric Rows</p>
+    </div>
+
+    <div id="palaces-grid"></div>
+
+    <script>
+        // Definitie van de 8 Paleizen en hun visuele eigenschappen
+        const palaces = [
+            { id: "Dui", name: "Palace Dui", color: "#3b82f6", class: "color-dui" },
+            { id: "Gen", name: "Palace Gen", color: "#06b6d4", class: "color-gen" },
+            { id: "Kan", name: "Palace Kan", color: "#10b981", class: "color-kan" },
+            { id: "Kun", name: "Palace Kun", color: "#eab308", class: "color-kun" },
+            { id: "Zhen", name: "Palace Zhen", color: "#ec4899", class: "color-zhen" },
+            { id: "Xun", name: "Palace Xun", color: "#8b5cf6", class: "color-xun" },
+            { id: "Qian", name: "Palace Qian", color: "#ef4444", class: "color-qian" },
+            { id: "Li", name: "Palace Li", color: "#f97316", class: "color-li" }
+        ];
+
+        const grid = d3.select("#palaces-grid");
+
+        // SVG parameters per paleis
+        const width = 280;
+        const height = 280;
+        const radius = 100;
+
+        palaces.forEach(palace => {
+            // Container opbouwen
+            const container = grid.append("div").attr("class", "palace-container");
+            
+            // Header toevoegen
+            const header = container.append("div").attr("class", "palace-header");
+            header.append("div").attr("class", `badge ${palace.class}`).text(palace.id);
+            header.append("div").attr("class", "palace-title").text(palace.name);
+            header.append("div").attr("class", "hex-count").text("8 hex.");
+
+            // SVG Canvas toevoegen
+            const svg = container.append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+            // Bereken de 8 punten van de octagoon
+            const points = [];
+            for (let i = 0; i < 8; i++) {
+                // Rotatie met -Math.PI/2 om bovenaan te beginnen
+                const angle = (i * (Math.PI * 2) / 8) - Math.PI / 2;
+                points.push({
+                    x: Math.cos(angle) * radius,
+                    y: Math.sin(angle) * radius,
+                    id: i + 1
+                });
+            }
+
+            // 1. Teken de buitenste lijnen (de octagoon)
+            svg.append("polygon")
+                .attr("points", points.map(p => `${p.x},${p.y}`).join(" "))
+                .attr("fill", "none")
+                .attr("stroke", palace.color)
+                .attr("stroke-width", 1)
+                .attr("stroke-opacity", 0.5);
+
+            // 2. Teken de verbindingen naar het centrum (als een spinnenweb)
+            points.forEach((p, i) => {
+                // Lijn naar het midden
+                svg.append("line")
+                    .attr("x1", 0).attr("y1", 0)
+                    .attr("x2", p.x).attr("y2", p.y)
+                    .attr("stroke", palace.color)
+                    .attr("stroke-width", 1)
+                    .attr("stroke-opacity", 0.3);
+                
+                // Optioneel: Kruislijnen (structuur uit afbeelding)
+                let opposite = points[(i + 3) % 8];
+                svg.append("line")
+                    .attr("x1", p.x).attr("y1", p.y)
+                    .attr("x2", opposite.x).attr("y2", opposite.y)
+                    .attr("stroke", palace.color)
+                    .attr("stroke-width", 1)
+                    .attr("stroke-opacity", 0.15);
+            });
+
+            // 3. Teken de nodes (Hexagram locaties)
+            const node = svg.selectAll(".node")
+                .data(points)
+                .enter().append("g")
+                .attr("class", "node")
+                .attr("transform", d => `translate(${d.x}, ${d.y})`);
+
+            // Gekleurde stippen op basis van de afbeelding (Wu Xing)
+            // Hier gebruiken we de paleis-kleur als basis
+            node.append("circle")
+                .attr("r", 9)
+                .attr("fill", palace.color)
+                .attr("stroke", "#0b0f19")
+                .attr("stroke-width", 2);
+
+            node.append("text")
+                .attr("fill", "#0b0f19")
+                .text(d => d.id); // Dit kan later vervangen worden door de exacte hexagram ID's
+        });
+    </script>
+</body>
+</html>
