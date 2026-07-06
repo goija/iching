@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repositories - goija</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --lang-html: #e34c26;
+            --lang-cpp: #f34b7d;
+            --lang-js: #f1e05a;
+            --lang-shell: #89e051;
+            --lang-jupyter: #da5b0b;
+            --lang-tex: #3D6117;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0 0 0.5rem 0;
+            font-weight: 600;
+        }
+
+        .repo-count {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .repo-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        .repo-card:hover {
+            border-color: var(--text-muted);
+        }
+
+        .repo-title a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            word-break: break-all;
+        }
+
+        .repo-title a:hover {
+            text-decoration: underline;
+        }
+
+        .repo-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin: 0.5rem 0 1rem 0;
+            flex-grow: 1;
+        }
+
+        .repo-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .lang-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .lang-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--text-muted); /* Default */
+        }
+
+        .lang-dot.HTML { background-color: var(--lang-html); }
+        .lang-dot.C { background-color: var(--lang-cpp); } /* C++ */
+        .lang-dot.JavaScript { background-color: var(--lang-js); }
+        .lang-dot.Shell { background-color: var(--lang-shell); }
+        .lang-dot.Jupyter { background-color: var(--lang-jupyter); }
+        .lang-dot.TeX { background-color: var(--lang-tex); }
+        
+        .private-badge {
+            border: 1px solid var(--border-color);
+            border-radius: 2em;
+            padding: 0 7px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: 8px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>goija Repositories</h1>
+        <div class="repo-count">52 repositories</div>
+    </header>
+
+    <div class="grid-container">
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/vortexarcheologie_v72" target="_blank">vortexarcheologie_v72</a>
+            </div>
+            <p class="repo-desc">VORTEX v72 // Archeo-Acoustic Auralization Engine</p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on May 26</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/plotter" target="_blank">plotter</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot C"></span>C++</span>
+                <span>Updated on May 9</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/quantum" target="_blank">quantum</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated 2 days ago</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/VORTEX-OMNI-BRIDGE-v26.5" target="_blank">VORTEX-OMNI-BRIDGE-v26.5</a>
+            </div>
+            <p class="repo-desc">GNU General Public License v3.0</p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Apr 16</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/blog" target="_blank">blog</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated 3 weeks ago</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/webglengine" target="_blank">webglengine</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated 6 hours ago</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/videre" target="_blank">videre</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on May 22</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/fotoalbum" target="_blank">fotoalbum</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on May 30</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/-home-ontwerp-Downloads-vortexmaster-nexus-VORTEX_OMNI_AI_BRIDGE" target="_blank">-home-ontwerp-Downloads-vortexmaster-nexus-VORTEX_OMNI_AI_BRIDGE</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Apr 13</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/http-127.0.0.1-8000-Downloads-vortexmaster-MOBIEL_SINC_MINOR-" target="_blank">http-127.0.0.1-8000-...-MOBIEL_SINC_MINOR-</a>
+            </div>
+            <p class="repo-desc">vortexmaster/MOBIEL_SINC_MINOR (GPL-3.0)</p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Apr 12</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/iching" target="_blank">iching</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated 5 hours ago</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/WOO-sabic" target="_blank">WOO-sabic</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated 3 weeks ago</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/ipfs" target="_blank">ipfs</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on May 20</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/ECP-" target="_blank">ECP-</a>
+            </div>
+            <p class="repo-desc">Bronnen</p>
+            <div class="repo-meta">
+                <span>Updated 2 days ago</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/fra1-2r2vg-1775727349013-9735a4537dc5" target="_blank">fra1-2r2vg-1775727349013-9735a4537dc5</a>
+            </div>
+            <p class="repo-desc">MATRIX GATEWAY // STRATIGRAPHIC CORE (MIT License)</p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Apr 10</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/dataGHOSTinTHEDARK" target="_blank">dataGHOSTinTHEDARK</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot Shell"></span>Shell</span>
+                <span>Updated on Sep 24, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/penrose" target="_blank">penrose</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated 3 weeks ago</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/AGFA" target="_blank">AGFA</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on May 24</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/osint" target="_blank">osint</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on May 24</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/silly.makeup" target="_blank">silly.makeup</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Apr 18</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/stressmonitor" target="_blank">stressmonitor</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Mar 31</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/Wiegand" target="_blank">Wiegand</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Mar 30</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/kissfromarose" target="_blank">kissfromarose</a>
+            </div>
+            <p class="repo-desc">kissfromarose</p>
+            <div class="repo-meta">
+                <span>Updated on Sep 30, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/tls-scraper" target="_blank">tls-scraper</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span>Updated on Dec 3, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/3dmodel-viewer" target="_blank">3dmodel-viewer</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot Jupyter"></span>Jupyter Notebook</span>
+                <span>Updated on Apr 8</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/OxCal-Simulation-Model-in-JavaScript" target="_blank">OxCal-Simulation-Model...</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot TeX"></span>TeX</span>
+                <span>Updated on Sep 22, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/scherpenisse" target="_blank">scherpenisse</a>
+                <span class="private-badge">Private</span>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Apr 17</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/els-vortex-" target="_blank">els-vortex-</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot Jupyter"></span>Jupyter Notebook</span>
+                <span>Updated on Apr 8</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/webrtccheet" target="_blank">webrtccheet</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span>Updated on Sep 25, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/namenlijst" target="_blank">namenlijst</a>
+            </div>
+            <p class="repo-desc">namenlijst</p>
+            <div class="repo-meta">
+                <span>Updated on Sep 27, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/CQL2-Model" target="_blank">CQL2-Model</a>
+            </div>
+            <p class="repo-desc">archelogie -make models</p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Sep 22, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/mastodon" target="_blank">mastodon</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span>Updated 3 days ago</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/peertopeer" target="_blank">peertopeer</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Nov 23, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/vercel" target="_blank">vercel</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Apr 16</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/toroide_engine-" target="_blank">toroide_engine-</a>
+            </div>
+            <p class="repo-desc">Vortex 80-Bit Decoder</p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Mar 31</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/vortec_instrument" target="_blank">vortec_instrument</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Mar 31</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/carbage" target="_blank">carbage</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span>Updated on Sep 28, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/spotmaar" target="_blank">spotmaar</a>
+            </div>
+            <p class="repo-desc">spotmaar</p>
+            <div class="repo-meta">
+                <span>Updated on Sep 29, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/CABR" target="_blank">CABR</a>
+            </div>
+            <p class="repo-desc">NIOD</p>
+            <div class="repo-meta">
+                <span>Updated on Sep 24, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/planatir" target="_blank">planatir</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span>Updated 2 days ago</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/indexprojectjes" target="_blank">indexprojectjes</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Mar 31</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/sensoren" target="_blank">sensoren</a>
+            </div>
+            <p class="repo-desc">download data</p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot JavaScript"></span>JavaScript</span>
+                <span>Updated on Mar 27</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/real-time-" target="_blank">real-time-</a>
+            </div>
+            <p class="repo-desc">latency stack</p>
+            <div class="repo-meta">
+                <span>Updated on Sep 26, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/weersomstandigheden" target="_blank">weersomstandigheden</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span>Updated on Sep 26, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/Shell" target="_blank">Shell</a>
+            </div>
+            <p class="repo-desc">Weervisserij en mossel-oester percelen</p>
+            <div class="repo-meta">
+                <span>Updated on Sep 25, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/flask" target="_blank">flask</a>
+            </div>
+            <p class="repo-desc">sms</p>
+            <div class="repo-meta">
+                <span>Updated on Sep 25, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/ETgoHOME" target="_blank">ETgoHOME</a>
+            </div>
+            <p class="repo-desc">SMS-code to the future</p>
+            <div class="repo-meta">
+                <span>Updated on Sep 24, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/GhostintheShell" target="_blank">GhostintheShell</a>
+            </div>
+            <p class="repo-desc">console</p>
+            <div class="repo-meta">
+                <span>Updated on Sep 24, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/boek" target="_blank">boek</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span>Updated on Sep 23, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/canvas" target="_blank">canvas</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Sep 22, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/dd-to-dms-" target="_blank">dd-to-dms-</a>
+            </div>
+            <p class="repo-desc">converter + plot</p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Sep 22, 2025</span>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-title">
+                <a href="https://github.com/goija/Hellingen-Hoeken-t.o.v.-oosten-en-OW-lengtes" target="_blank">Hellingen-Hoeken...</a>
+            </div>
+            <p class="repo-desc"></p>
+            <div class="repo-meta">
+                <span class="lang-indicator"><span class="lang-dot HTML"></span>HTML</span>
+                <span>Updated on Sep 21, 2025</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
