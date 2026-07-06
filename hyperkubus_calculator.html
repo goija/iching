@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperkubus Calculator (Wolfram Stijl)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            color: #d35400;
+            margin-top: 0;
+            text-align: center;
+        }
+        .math-display {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #fdfbf7;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        .controls {
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type=range] {
+            width: 100%;
+            cursor: pointer;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            background-color: #f1f3f5;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .stat-box {
+            text-align: center;
+            width: 48%;
+        }
+        .stat-box span {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2980b9;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>n-Dimensionale Hyperkubus Eigenschappen</h1>
+        
+        <div class="controls">
+            <label for="dimSlider">Dimensie (n): <span id="n-value">6</span></label>
+            <input type="range" id="dimSlider" min="1" max="12" value="6" step="1">
+        </div>
+
+        <div class="math-display" id="formula-display">
+            E = 6 &middot; 2<sup>5</sup> = 192
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                Knooppunten (2<sup>n</sup>)
+                <span id="vertices-output">64</span>
+            </div>
+            <div class="stat-box">
+                Verbindingen (E)
+                <span id="edges-output">192</span>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="growthChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elementen
+        const slider = document.getElementById('dimSlider');
+        const nValueDisplay = document.getElementById('n-value');
+        const formulaDisplay = document.getElementById('formula-display');
+        const verticesOutput = document.getElementById('vertices-output');
+        const edgesOutput = document.getElementById('edges-output');
+        const ctx = document.getElementById('growthChart').getContext('2d');
+
+        // Initialiseer Chart.js
+        let growthChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Aantal Verbindingen (E)',
+                    data: [],
+                    borderColor: '#d35400',
+                    backgroundColor: 'rgba(211, 84, 0, 0.1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#2980b9',
+                    pointRadius: 4,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        type: 'linear' // Wisselt naar logaritmisch bij grote getallen in update()
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `E = ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Wiskundige functies
+        function calculateVertices(n) {
+            return Math.pow(2, n);
+        }
+
+        function calculateEdges(n) {
+            if (n === 0) return 0;
+            return n * Math.pow(2, n - 1);
+        }
+
+        // Update UI en Grafiek
+        function updateCalculator() {
+            const n = parseInt(slider.value);
+            const vertices = calculateVertices(n);
+            const edges = calculateEdges(n);
+
+            // Update tekst
+            nValueDisplay.textContent = n;
+            verticesOutput.textContent = vertices.toLocaleString('nl-NL');
+            edgesOutput.textContent = edges.toLocaleString('nl-NL');
+            
+            // Update formule weergave (zoals in de afbeelding)
+            const nMinusOne = n - 1;
+            formulaDisplay.innerHTML = `E = ${n} &middot; 2<sup>${nMinusOne}</sup> = ${edges.toLocaleString('nl-NL')}`;
+
+            // Update grafiek data (bereken reeks van 1 tot geselecteerde n, max 12 voor de overzichtelijkheid)
+            const maxN = Math.max(n, 6); // Toon minstens tot n=6
+            const labels = [];
+            const dataPoints = [];
+            const pointColors = [];
+            const pointRadii = [];
+
+            for (let i = 1; i <= maxN; i++) {
+                labels.push(`n=${i}`);
+                dataPoints.push(calculateEdges(i));
+                
+                // Markeer de huidig geselecteerde n
+                if (i === n) {
+                    pointColors.push('#e74c3c');
+                    pointRadii.push(7);
+                } else {
+                    pointColors.push('#2980b9');
+                    pointRadii.push(4);
+                }
+            }
+
+            growthChart.data.labels = labels;
+            growthChart.data.datasets[0].data = dataPoints;
+            growthChart.data.datasets[0].pointBackgroundColor = pointColors;
+            growthChart.data.datasets[0].pointRadius = pointRadii;
+            
+            // Gebruik een logaritmische schaal als de waarden te groot worden voor een heldere curve
+            growthChart.options.scales.y.type = maxN > 8 ? 'logarithmic' : 'linear';
+            
+            growthChart.update();
+        }
+
+        // Event listener voor de slider
+        slider.addEventListener('input', updateCalculator);
+
+        // Initiële render
+        updateCalculator();
+    </script>
+</body>
+</html>
