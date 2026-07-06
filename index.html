@@ -1,1 +1,99 @@
 
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Tjing - Repository Navigatie</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #ffffff;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+        .nav-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #555;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.5);
+            background-color: #252525;
+        }
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.2em;
+            color: #3498db;
+        }
+        .card.special h2 {
+            color: #f39c12; /* Hexagram 22 Goud */
+        }
+        .card p {
+            font-size: 0.9em;
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>I TJING REPOSITORY</h1>
+    <p class="subtitle">Verken de wiskunde, logica en topologie van het Boek der Veranderingen</p>
+
+    <div class="nav-container">
+        
+        <a href="selfing_itjing.html" class="card special">
+            <h2>Dynamisch "Selfing" Proces</h2>
+            <p>Een autonome walker die via XOR-mutaties door de 6-dimensionale faseruimte reist. Geïnspireerd op het werk van Anthony Judge.</p>
+        </a>
+
+        <a href="hexeract_itjing.html" class="card">
+            <h2>6D Hexeract Topologie</h2>
+            <p>De fundamentele structuur van de 64 hexagrammen en hun 192 Hamming-afstand verbindingen, deterministisch gerenderd.</p>
+        </a>
+
+        <a href="wuxing_flower.html" class="card">
+            <h2>Wu Xing Flower Partition</h2>
+            <p>Een D3.js netwerkgrafiek die de wisselwerking tussen de hexagrammen en de vijf elementen visualiseert.</p>
+        </a>
+
+        <a href="De_I_Tjing.html" class="card">
+            <h2>Artikel: De Oorsprong</h2>
+            <p>Een introductie tot de I Tjing als filosofische taxonomie en kosmische Rosetta-steen. (Lichte weergave)</p>
+        </a>
+
+    </div>
+
+</body>
+</html>
